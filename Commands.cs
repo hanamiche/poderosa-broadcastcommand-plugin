@@ -68,5 +68,18 @@ namespace Contrib.BroadcastCommand {
                 ts.TerminalTransmission.Transmit(bytes);
             }
         }
+        
+        /// <summary>
+        /// Ctrl+D送信
+        /// </summary>
+        public void SendCtrlD(ArrayList terminalSession)
+        {
+            byte[] bytes = { (byte)0x04 }; // CtrlC=ETX=0x04
+
+            foreach (ITerminalSession ts in terminalSession)
+            {
+                ts.TerminalTransmission.Transmit(bytes);
+            }
+        }
     }
 }

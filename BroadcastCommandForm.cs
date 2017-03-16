@@ -42,7 +42,7 @@ namespace Contrib.BroadcastCommand {
             InitializeComponent();
             InitializeComponentValue();
 
-            RefreshSessionList();
+            RefreshSessionList(true);
             if (_sessionListView.Items.Count > 0) {
                 _sessionListView.Items[0].Selected = true;
             }
@@ -71,6 +71,7 @@ namespace Contrib.BroadcastCommand {
             this._clearBufferButton.Text = BroadcastCommandPlugin.Strings.GetString("Form.BroadcastCommand._clearBufferButton");
             this._sendNewLineButton.Text = BroadcastCommandPlugin.Strings.GetString("Form.BroadcastCommand._sendNewLineButton");
             this._sendCtrlCButton.Text = BroadcastCommandPlugin.Strings.GetString("Form.BroadcastCommand._sendCtrlCButton");
+            this._sendCtrlDButton.Text = BroadcastCommandPlugin.Strings.GetString("Form.BroadcastCommand._sendCtrlDButton");
 
             // デフォルト値
             this.Width = FORM_WIDTH_LOG_HIDE;
@@ -101,7 +102,7 @@ namespace Contrib.BroadcastCommand {
         /// <summary>
         /// セッションリスト更新
         /// </summary>
-        private void RefreshSessionList() {
+        private void RefreshSessionList(bool _bFirst = false) {
             _refreshingFlg = true;
             _sessionListView.BeginUpdate();
             _sessionListView.Items.Clear();
@@ -120,6 +121,12 @@ namespace Contrib.BroadcastCommand {
                 // データ代入
                 li.Text = (i + 1).ToString(); // タブ番号
                 li.SubItems.Add(doc.Caption); // ホスト名
+                
+                // 初回呼び出し時は全部選択する
+                if (_bFirst == true)
+                {
+                    li.Checked = true;
+                }
 
                 foreach (int tmphash in _selectSessionsHash) {
                     if (tmphash == hash) {
@@ -140,6 +147,13 @@ namespace Contrib.BroadcastCommand {
 
             // 全選択ボタン有効/無効化
             _listAllSelectButton.Enabled = _sessionListView.Items.Count > 0 ? true : false;
+            
+            //全選択を行った状態にする
+            if(_bFirst == true)
+            {
+                _listAllSelectButton.Text = BroadcastCommandPlugin.Strings.GetString("Form.BroadcastCommand._listAllSelectButton.Uncheck");
+                _allSelectFlg = true;
+            }
         }
 
         /// <summary>
@@ -395,6 +409,33 @@ namespace Contrib.BroadcastCommand {
                     }
                 }
             }
+        }
+
+        /// <summary>
+        /// フォームができたらコマンド入力テキストボックスにフォーカスする
+        /// </summary>
+        private void BroadcastCommandForm_Shown(object sender, EventArgs e)
+        {
+            //テキストボックスにフォーカス
+            this._commandBox.Focus();
+        }
+
+        /// <summary>
+        /// Ctrl+D送信ボタンイベント
+        /// </summary>
+        private void _sendCtrlDButton_Click(object sender, EventArgs e)
+        {
+            // 選択セッションを配列に格納
+            string selectSessionStr = GetSelectedSessionList();
+
+            // コマンド送信スレッド作成
+            Thread _sendCommandThread = new Thread((ThreadStart)delegate () {
+                _cmd.SendCtrlD(_selectSessions);
+            });
+            _sendCommandThread.IsBackground = true;
+            _sendCommandThread.Start();
+
+            //RefreshSessionList();
         }
     }
 

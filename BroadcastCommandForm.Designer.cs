@@ -50,6 +50,7 @@ namespace Contrib.BroadcastCommand {
             this._clearBufferButton = new System.Windows.Forms.Button();
             this._sendNewLineButton = new System.Windows.Forms.Button();
             this._sendCtrlCButton = new System.Windows.Forms.Button();
+            this._sendCtrlDButton = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this._repeatCountBox)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this._repeatIntervalBox)).BeginInit();
             this.SuspendLayout();
@@ -63,7 +64,7 @@ namespace Contrib.BroadcastCommand {
             this._hostNameColumn});
             this._sessionListView.FullRowSelect = true;
             this._sessionListView.GridLines = true;
-            this._sessionListView.Location = new System.Drawing.Point(1, 317);
+            this._sessionListView.Location = new System.Drawing.Point(1, 363);
             this._sessionListView.MultiSelect = false;
             this._sessionListView.Name = "_sessionListView";
             this._sessionListView.ShowItemToolTips = true;
@@ -203,7 +204,7 @@ namespace Contrib.BroadcastCommand {
             this._logBox.Name = "_logBox";
             this._logBox.ReadOnly = true;
             this._logBox.ScrollBars = System.Windows.Forms.ScrollBars.Both;
-            this._logBox.Size = new System.Drawing.Size(258, 427);
+            this._logBox.Size = new System.Drawing.Size(258, 478);
             this._logBox.TabIndex = 15;
             this._logBox.WordWrap = false;
             this._logBox.KeyDown += new System.Windows.Forms.KeyEventHandler(this._logBox_KeyDown);
@@ -244,7 +245,7 @@ namespace Contrib.BroadcastCommand {
             // _alwaysOnTopCheck
             // 
             this._alwaysOnTopCheck.AutoSize = true;
-            this._alwaysOnTopCheck.Location = new System.Drawing.Point(12, 295);
+            this._alwaysOnTopCheck.Location = new System.Drawing.Point(12, 341);
             this._alwaysOnTopCheck.Name = "_alwaysOnTopCheck";
             this._alwaysOnTopCheck.Size = new System.Drawing.Size(128, 16);
             this._alwaysOnTopCheck.TabIndex = 13;
@@ -255,7 +256,7 @@ namespace Contrib.BroadcastCommand {
             // _notSendNewLineCheck
             // 
             this._notSendNewLineCheck.AutoSize = true;
-            this._notSendNewLineCheck.Location = new System.Drawing.Point(173, 295);
+            this._notSendNewLineCheck.Location = new System.Drawing.Point(173, 341);
             this._notSendNewLineCheck.Name = "_notSendNewLineCheck";
             this._notSendNewLineCheck.Size = new System.Drawing.Size(144, 16);
             this._notSendNewLineCheck.TabIndex = 14;
@@ -295,12 +296,24 @@ namespace Contrib.BroadcastCommand {
             this._sendCtrlCButton.UseVisualStyleBackColor = true;
             this._sendCtrlCButton.Click += new System.EventHandler(this._sendCtrlCButton_Click);
             // 
+            // _sendCtrlDButton
+            // 
+            this._sendCtrlDButton.Cursor = System.Windows.Forms.Cursors.Default;
+            this._sendCtrlDButton.Location = new System.Drawing.Point(232, 295);
+            this._sendCtrlDButton.Name = "_sendCtrlDButton";
+            this._sendCtrlDButton.Size = new System.Drawing.Size(104, 23);
+            this._sendCtrlDButton.TabIndex = 16;
+            this._sendCtrlDButton.Text = "_sendCtrlDButton";
+            this._sendCtrlDButton.UseVisualStyleBackColor = true;
+            this._sendCtrlDButton.Click += new System.EventHandler(this._sendCtrlDButton_Click);
+            // 
             // BroadcastCommandForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.CancelButton = this._cancelButton;
-            this.ClientSize = new System.Drawing.Size(604, 427);
+            this.ClientSize = new System.Drawing.Size(604, 478);
+            this.Controls.Add(this._sendCtrlDButton);
             this.Controls.Add(this._sendCtrlCButton);
             this.Controls.Add(this._sendNewLineButton);
             this.Controls.Add(this._clearBufferButton);
@@ -328,6 +341,7 @@ namespace Contrib.BroadcastCommand {
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "BroadcastCommandForm";
             this.TopMost = true;
+            this.Shown += new System.EventHandler(this.BroadcastCommandForm_Shown);
             ((System.ComponentModel.ISupportInitialize)(this._repeatCountBox)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this._repeatIntervalBox)).EndInit();
             this.ResumeLayout(false);
@@ -357,6 +371,7 @@ namespace Contrib.BroadcastCommand {
         private System.Windows.Forms.Button _clearBufferButton;
         private System.Windows.Forms.Button _sendNewLineButton;
         private System.Windows.Forms.Button _sendCtrlCButton;
+        private System.Windows.Forms.Button _sendCtrlDButton;
     }
 
 }
